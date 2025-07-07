@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-t from-gray-800 to-gray-400 min-h-screen;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 8px #0006, 0 0 2px #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #222;
+}
+::-webkit-scrollbar-thumb {
+  background: #a259ff;
+  border-radius: 8px;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
