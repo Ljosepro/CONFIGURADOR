@@ -572,6 +572,7 @@ const MidiConfigurator = () => {
     return associatedRing;
   }, []);
 
+  // Restaurar la función changeView y la lógica de cámara a su estado original antes de los cambios de diseño emocional.
   const changeView = useCallback((viewName: 'normal' | 'chasis' | 'buttons' | 'knobs') => {
     setCurrentView(viewName);
 
