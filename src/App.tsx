@@ -944,7 +944,7 @@ const MidiConfigurator = () => {
             <p className="font-black text-sm tracking-wide uppercase m-0 mb-3 text-gray-200 text-left">
               {getTitle()}
             </p>
-            <div className="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 p-1 md:p-2 bg-black bg-opacity-20 rounded overflow-x-auto">
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 p-1 md:p-2 rounded overflow-x-auto" style={{ backgroundColor: '#5944D3' }}>
               {Object.entries(getCurrentColors()).map(([name, colorData]) => (
                 <div
                   key={name}
