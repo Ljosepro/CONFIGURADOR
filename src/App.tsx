@@ -55,43 +55,46 @@ const MidiConfigurator = () => {
   // Estado para selección múltiple de botones
   const [selectedButtons, setSelectedButtons] = useState<THREE.Mesh[]>([]);
 
+  // Estado para selección múltiple de knobs
+  const [selectedKnobs, setSelectedKnobs] = useState<THREE.Mesh[]>([]);
+
   // Configuración de paletas
   const PALETTES: Palettes = {
     chasis: {
-      'Verde':    { hex: '#1F7A1F' },
-      'Amarillo': { hex: '#FFD700' },
-      'Azul':     { hex: '#0077FF' },
-      'Blanco':   { hex: '#F5F5F5' },
-      'Naranja':  { hex: '#FF7300' },
-      'Morado':   { hex: '#6A0DAD' },
-      'Rojo':     { hex: '#D00000' },
-      'Negro':    { hex: '#1C1C1C' },
-      'Rosa':     { hex: '#FF007F' },
       'Gris':     { hex: '#808080' },
+      'Plata':    { hex: '#C0C0C0' },
+      'Negro':    { hex: '#1A1A1A' },
+      'Blanco':   { hex: '#F5F5F5' },
+      'Dorado':   { hex: '#FFD700' },
+      'Grafito':  { hex: '#404040' },
+      'Azul Noche':{ hex: '#003366' },
+      'Rojo Vino':{ hex: '#722F37' },
+      'Titanio':  { hex: '#878681' },
+      'Bronce':   { hex: '#CD7F32' },
     },
     buttons: {
-      'Verde':    { hex: '#1F7A1F' },
-      'Amarillo': { hex: '#FFD700' },
+      'Rojo':     { hex: '#D00000' },
       'Azul':     { hex: '#0077FF' },
-      'Blanco':   { hex: '#F5F5F5' },
+      'Verde':    { hex: '#1F7A1F' },
+      'Blanco':   { hex: '#FFFFFF' },
+      'Negro':    { hex: '#060606' },
+      'Amarillo': { hex: '#FFD700' },
       'Naranja':  { hex: '#FF7300' },
       'Morado':   { hex: '#6A0DAD' },
-      'Rojo':     { hex: '#D00000' },
-      'Negro':    { hex: '#1C1C1C' },
-      'Rosa':     { hex: '#FF007F' },
-      'Gris':     { hex: '#808080' },
+      'Cian':     { hex: '#00FFFF' },
+      'Magenta':  { hex: '#FF00FF' },
     },
     knobs: {
-      'Verde':    { hex: '#1F7A1F' },
-      'Amarillo': { hex: '#FFD700' },
-      'Azul':     { hex: '#0077FF' },
-      'Blanco':   { hex: '#F5F5F5' },
-      'Naranja':  { hex: '#FF7300' },
-      'Morado':   { hex: '#6A0DAD' },
-      'Rojo':     { hex: '#D00000' },
-      'Negro':    { hex: '#1C1C1C' },
       'Rosa':     { hex: '#FF007F' },
-      'Gris':     { hex: '#808080' },
+      'Morado':   { hex: '#6A0DAD' },
+      'Naranja':  { hex: '#FF7300' },
+      'Verde':    { hex: '#1F7A1F' },
+      'Turquesa': { hex: '#40E0D0' },
+      'Lima':     { hex: '#AFFF33' },
+      'Índigo':   { hex: '#4B0082' },
+      'Coral':    { hex: '#FF7F50' },
+      'Cielo':    { hex: '#87CEEB' },
+      'Menta':    { hex: '#3EB489' },
     }
   };
 
@@ -234,7 +237,7 @@ const MidiConfigurator = () => {
         newSelectable.chasis.push(child);
         newChosenColors.chasis = 'Gris';
       }
-      else if (meshName.includes('boton') || meshName.includes('aro')) {
+      else if (meshName.includes('boton')) {
         const defaultColor = 'Negro';
         child.material = new THREE.MeshStandardMaterial({ 
           color: PALETTES.buttons[defaultColor].hex, 
@@ -509,14 +512,12 @@ const MidiConfigurator = () => {
             btn.name.includes(buttonNumber.toString())
           );
           if (associatedButton) {
-            // Seleccionar el botón asociado en lugar del aro
             setSelectedForColoring(associatedButton);
-            // Aplicar glow al botón seleccionado
             setEmissive(associatedButton, 0x444444);
           } else {
-            // Si no encuentra el botón, seleccionar el aro
-            setSelectedForColoring(selectedObject);
-            setEmissive(selectedObject, 0x444444);
+            // Si no encuentra el botón, NO selecciona ni resalta nada
+            setSelectedForColoring(null);
+            return;
           }
         } else {
           // Si es un botón, seleccionarlo normalmente
@@ -572,7 +573,6 @@ const MidiConfigurator = () => {
     return associatedRing;
   }, []);
 
-  // Restaurar la función changeView y la lógica de cámara a su estado original antes de los cambios de diseño emocional.
   const changeView = useCallback((viewName: 'normal' | 'chasis' | 'buttons' | 'knobs') => {
     setCurrentView(viewName);
 
@@ -595,26 +595,19 @@ const MidiConfigurator = () => {
     }
     controlsRef.current.enabled = enableOrbit;
 
-    // Animar la cámara y el target suavemente con gsap
-    gsap.to(cameraRef.current.position, {
-      duration: 1.2,
-      ease: 'power3.inOut',
-      x: targetView.pos.x,
-      y: targetView.pos.y,
-      z: targetView.pos.z,
-      onUpdate: () => {
-        cameraRef.current && cameraRef.current.updateProjectionMatrix();
-      }
+    // Animar la cámara y el target igual que en el código vanilla
+    gsap.to(cameraRef.current.position, { 
+      duration: 1.2, 
+      ease: 'power3.inOut', 
+      ...targetView.pos 
     });
-    gsap.to(controlsRef.current.target, {
-      duration: 1.2,
-      ease: 'power3.inOut',
-      x: targetView.target.x,
-      y: targetView.target.y,
-      z: targetView.target.z,
-      onUpdate: () => controlsRef.current.update(),
+    gsap.to(controlsRef.current.target, { 
+      duration: 1.2, 
+      ease: 'power3.inOut', 
+      ...targetView.target, 
+      onUpdate: () => controlsRef.current.update() 
     });
-  }, [selectable]);
+}, [selectable]);
 
   // Aplicar color
   const applyColor = useCallback((colorName: string, colorData: PaletteColor) => {
@@ -633,17 +626,29 @@ const MidiConfigurator = () => {
       selectedButtons.forEach(btn => {
         (btn.material as THREE.MeshStandardMaterial).color.set(colorData.hex);
         newChosenColors.buttons[btn.name] = colorName;
-        // Aplicar el mismo color al aro asociado
+        // Cambiar color del aro correspondiente
         const associatedRing = findAssociatedRing(btn.name);
         if (associatedRing && associatedRing.material) {
           (associatedRing.material as THREE.MeshStandardMaterial).color.set(colorData.hex);
-          newChosenColors.buttons[associatedRing.name] = colorName;
+          // Opcional: puedes guardar el color del aro en chosenColors si lo necesitas
         }
       });
       setChosenColors(newChosenColors);
-      // Quitar glow de los botones seleccionados
       selectedButtons.forEach(btn => setEmissive(btn, 0x000000));
-      setSelectedButtons([]); // Deselecciona después de aplicar color
+      setSelectedButtons([]);
+      return;
+    }
+
+    // En la vista de knobs, si hay selección múltiple
+    if (currentView === 'knobs' && selectedKnobs.length > 0) {
+      const newChosenColors = { ...chosenColors, knobs: { ...chosenColors.knobs } };
+      selectedKnobs.forEach(knob => {
+        (knob.material as THREE.MeshStandardMaterial).color.set(colorData.hex);
+        newChosenColors.knobs[knob.name] = colorName;
+      });
+      setChosenColors(newChosenColors);
+      selectedKnobs.forEach(knob => setEmissive(knob, 0x000000));
+      setSelectedKnobs([]);
       return;
     }
 
@@ -657,12 +662,12 @@ const MidiConfigurator = () => {
     const selectedName = selectedForColoring.name;
     if (selectable.buttons.includes(selectedForColoring)) {
       newChosenColors.buttons[selectedName] = colorName;
-      // Aplicar el mismo color al aro asociado si es un botón
+      // Cambiar color del aro correspondiente
       if (selectedName.toLowerCase().includes('boton')) {
         const associatedRing = findAssociatedRing(selectedName);
         if (associatedRing && associatedRing.material) {
           (associatedRing.material as THREE.MeshStandardMaterial).color.set(colorData.hex);
-          newChosenColors.buttons[associatedRing.name] = colorName;
+          // Opcional: puedes guardar el color del aro en chosenColors si lo necesitas
         }
       }
       // Quitar glow del botón seleccionado
@@ -671,7 +676,7 @@ const MidiConfigurator = () => {
       newChosenColors.knobs[selectedName] = colorName;
     }
     setChosenColors(newChosenColors);
-  }, [selectedForColoring, selectedButtons, chosenColors, selectable, currentView, findAssociatedRing]);
+  }, [selectedForColoring, selectedButtons, chosenColors, selectable, currentView, findAssociatedRing, selectedKnobs]);
 
   // Abrir modal de pago y capturar imagen con vista frontal fija
   const handleOpenPayment = useCallback(() => {
@@ -748,6 +753,25 @@ const MidiConfigurator = () => {
       }
     }, 100);
   }, []);
+
+  const menuIcons = [
+  { id: 'normal', icon: 'M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17M12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z', title: 'Vista General' },
+  { id: 'chasis', icon: `M4 4 Q2 4 2 8 L2 24 Q2 28 4 28 L28 28 Q30 28 30 24 L30 8 Q30 4 28 4 Z
+    M8 8 A1.3 1.3 0 1 1 10.6 8 A1.3 1.3 0 1 1 8 8
+    M12 8 A1.3 1.3 0 1 1 14.6 8 A1.3 1.3 0 1 1 12 8
+    M16 8 A1.3 1.3 0 1 1 18.6 8 A1.3 1.3 0 1 1 16 8
+    M20 8 A1.3 1.3 0 1 1 22.6 8 A1.3 1.3 0 1 1 20 8
+    M5 15 A2 2 0 1 1 9 15 A2 2 0 1 1 5 15
+    M11 15 A2 2 0 1 1 15 15 A2 2 0 1 1 11 15
+    M17 15 A2 2 0 1 1 21 15 A2 2 0 1 1 17 15
+    M23 15 A2 2 0 1 1 27 15 A2 2 0 1 1 23 15
+    M5 22 A2 2 0 1 1 9 22 A2 2 0 1 1 5 22
+    M11 22 A2 2 0 1 1 15 22 A2 2 0 1 1 11 22
+    M17 22 A2 2 0 1 1 21 22 A2 2 0 1 1 17 22
+    M23 22 A2 2 0 1 1 27 22 A2 2 0 1 1 23 22`, title: 'Chasis', viewBox: '0 0 32 32' },
+  { id: 'buttons', icon: 'M12 1.999c5.524 0 10.002 4.478 10.002 10.002c0 5.523-4.478 10.001-10.002 10.001S1.998 17.524 1.998 12.001C1.998 6.477 6.476 1.999 12 1.999m0 1.5a8.502 8.502 0 1 0 0 17.003A8.502 8.502 0 0 0 12 3.5M11.996 6a5.998 5.998 0 1 1 0 11.996a5.998 5.998 0 0 1 0-11.996', title: 'Botones' },
+  { id: 'knobs', icon: 'M9.42 4.074a.56.56 0 0 0-.56.56v.93c0 .308.252.56.56.56s.56-.252.56-.56v-.93a.56.56 0 0 0-.56-.56M11.554 8.8a.5.5 0 0 1 0 .707l-1.78 1.78a.5.5 0 1 1-.708-.707l1.78-1.78a.5.5 0 0 1 .708 0 M9.42 15.444c-1.16 0-2.32-.44-3.2-1.32a4.527 4.527 0 0 1 0-6.39a4.527 4.527 0 0 1 6.39 0a4.527 4.527 0 0 1 0 6.39c-.88.88-2.03 1.32-3.19 1.32m0-1.1a3.41 3.41 0 1 0 0-6.82a3.41 3.41 0 0 0 0 6.82M6.757 5.2a.56.56 0 1 0-.965.567l.465.809l.005.006a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.075a.566.566 0 0 0 .205-.753zm5.315.012a.55.55 0 0 1 .761-.206c.277.152.36.5.203.764l-.458.797a.56.56 0 0 1-.478.277a.564.564 0 0 1-.487-.834zm7.598 5.722a.5.5 0 0 1 .5-.5h2.52a.5.5 0 1 1 0 1h-2.52a.5.5 0 0 1-.5-.5 M22.69 15.454c2.49 0 4.52-2.03 4.52-4.52s-2.03-4.52-4.52-4.52s-4.52 2.03-4.52 4.52s2.03 4.52 4.52 4.52m0-1.11a3.41 3.41 0 1 1 0-6.82a3.41 3.41 0 0 1 0 6.82m-.56-9.7c0-.308.252-.56.56-.56s.56.252.56.56v.945a.566.566 0 0 1-.56.535a.56.56 0 0 1-.56-.56zm-2.103.566a.557.557 0 0 0-.763-.202a.566.566 0 0 0-.204.753l.468.815l.004.006a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.075a.566.566 0 0 0 .205-.753zm6.086-.204a.55.55 0 0 0-.761.206l-.458.795a.55.55 0 0 0 .194.759c.1.067.217.078.282.078a.6.6 0 0 0 .478-.262l.005-.006l.463-.806a.55.55 0 0 0-.203-.764M11.93 22.636H9.42a.5.5 0 0 0 0 1h2.51a.5.5 0 1 0 0-1 M4.9 23.136c0 2.49 2.03 4.52 4.52 4.52s4.52-2.03 4.52-4.52s-2.03-4.52-4.52-4.52s-4.52 2.03-4.52 4.52m7.93 0a3.41 3.41 0 1 1-6.82 0a3.41 3.41 0 0 1 6.82 0m-3.41-6.86a.56.56 0 0 0-.56.56v.93c0 .308.252.56.56.56s.56-.252.56-.56v-.93a.56.56 0 0 0-.56-.56m-3.418.93a.566.566 0 0 1 .755.206l.464.807c.137.258.06.6-.205.753a.53.53 0 0 1-.276.074a.58.58 0 0 1-.478-.261l-.005-.007l-.468-.814a.566.566 0 0 1 .207-.755zm6.08.209a.55.55 0 0 1 .761-.206c.277.151.36.499.203.764l-.462.802a.567.567 0 0 1-.766.194a.55.55 0 0 1-.194-.76zm8.475 3.588a.5.5 0 0 1 .707 0l1.78 1.78a.5.5 0 0 1-.707.707l-1.78-1.78a.5.5 0 0 1 0-.707 M22.69 27.656c-1.16 0-2.32-.44-3.2-1.32a4.527 4.527 0 0 1 0-6.39a4.527 4.527 0 0 1 6.39 0a4.527 4.527 0 0 1 0 6.39c-.88.88-2.04 1.32-3.19 1.32m0-1.11a3.41 3.41 0 1 0 0-6.82a3.41 3.41 0 0 0 0 6.82 M22.13 16.836c0-.308.252-.56.56-.56s.56.252.56.56v.945a.57.57 0 0 1-.56.545a.56.56 0 0 1-.56-.56zm-2.103.576a.566.566 0 0 0-.755-.206l-.006.003a.565.565 0 0 0-.206.755l.468.814l.004.007a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.074a.566.566 0 0 0 .205-.753zm6.086-.203a.55.55 0 0 0-.761.206l-.458.795a.55.55 0 0 0 .194.759a.5.5 0 0 0 .282.077a.6.6 0 0 0 .478-.261l.005-.007l.463-.805a.55.55 0 0 0-.203-.764 M1 5.75A4.75 4.75 0 0 1 5.75 1h20.52a4.75 4.75 0 0 1 4.75 4.75v20.48a4.75 4.75 0 0 1-4.75 4.75H5.75A4.75 4.75 0 0 1 1 26.23zM5.75 3A2.75 2.75 0 0 0 3 5.75v20.48a2.75 2.75 0 0 0 2.75 2.75h20.52a2.75 2.75 0 0 0 2.75-2.75V5.75A2.75 2.75 0 0 0 26.27 3z', title: 'Knobs' }
+];
 
   return (
     <div className="w-full h-screen bg-black text-gray-200 overflow-hidden relative">
@@ -840,35 +864,35 @@ const MidiConfigurator = () => {
         {/* Columna de controles de vista */}
         <div className="w-28 p-6 flex-shrink-0" style={{ paddingTop: '200px' }}>
           <div className="flex flex-col gap-2">
-            {[
-              { id: 'normal', icon: 'M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17M12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z', title: 'Vista General' },
-              { id: 'chasis', icon: 'M3 3H21V21H3V3M5 5V19H19V5H5Z', title: 'Chasis' },
-              { id: 'buttons', icon: 'M4 4H8V8H4V4M10 4H14V8H10V4M16 4H20V8H16V4M4 10H8V14H4V10M10 10H14V14H10V10M16 10H20V14H16V10M4 16H8V20H4V16M10 16H14V20H10V16M16 16H20V20H16V20Z', title: 'Botones' },
-              { id: 'knobs', icon: 'M10 16.5C10 18.98 12.02 21 14.5 21S19 18.98 19 16.5C19 14.02 16.98 12 14.5 12S10 14.02 10 16.5M5 7.5C5 9.98 7.02 12 9.5 12S14 9.98 14 7.5C14 5.02 11.98 3 9.5 3S5 5.02 5 7.5Z', title: 'Knobs' }
-            ].map(({ id, icon, title }) => (
-              <button
-                key={id}
-                onClick={() => changeView(id as 'normal' | 'chasis' | 'buttons' | 'knobs')}
-                className={`w-full aspect-square border rounded flex items-center justify-center p-3 transition-all duration-200 ${
-                  currentView === id 
-                    ? 'bg-[#a259ff] border-[#a259ff] shadow-[0_0_8px_2px_#a259ff80,0_0_16px_4px_#0ff5,0_0_2px_1px_#fff3] text-white'
-                    : 'border-gray-600 bg-gray-800 bg-opacity-80 hover:bg-gray-600 hover:border-[#a259ff] text-gray-200 hover:shadow-[0_0_4px_1px_#a259ff60,0_0_8px_2px_#0ff3]'
-                }`}
-                title={title}
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  viewBox="0 0 24 24" 
-                  className={`w-3/5 h-3/5 fill-current transition-colors duration-200 ${
-                    currentView === id ? 'text-gray-900' : 'text-gray-200 hover:text-purple-400'
-                  }`}
-                >
-                  <path d={icon} />
-                </svg>
-              </button>
-            ))}
-          </div>
-        </div>
+            {menuIcons.map(({ id, icon, title, viewBox }) => (
+      <button
+        key={id}
+        onClick={
+          id === 'faders'
+            ? undefined
+            : () => changeView(id as 'normal' | 'chasis' | 'buttons' | 'knobs')
+        }
+        className={`w-full aspect-square border rounded flex items-center justify-center p-3 transition-all duration-200 text-white ${
+          currentView === id 
+            ? 'bg-[#a259ff] border-[#a259ff] shadow-[0_0_8px_2px_#a259ff80,0_0_16px_4px_#0ff5,0_0_2px_1px_#fff3]'
+            : 'border-gray-600 bg-gray-800 bg-opacity-80 hover:bg-gray-600 hover:border-[#a259ff] hover:shadow-[0_0_4px_1px_#a259ff60,0_0_8px_2px_#0ff3]'
+        }`}
+        title={title}
+        disabled={id === 'faders'}
+        style={id === 'faders' ? { cursor: 'not-allowed' } : {}}
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox={id === 'chasis' ? '0 0 32 32' : id === 'knobs' ? '0 0 32 32' : id === 'faders' ? '0 0 256 256' : '0 0 24 24'}
+          className="w-4/5 h-4/5 mx-auto my-auto fill-white text-white"
+          fill="#fff"
+        >
+          <path d={icon} />
+        </svg>
+      </button>
+    ))}
+  </div>
+</div>
 
         {/* Contenido de la UI */}
         <div className="flex-1 p-4 flex flex-col">
