@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "homepage": "https://ljosepro.github.io/BEATOREACT2",
-
   "type": "module",
   "scripts": {
     "dev": "vite",
