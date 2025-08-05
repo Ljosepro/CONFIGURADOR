@@ -10,9 +10,12 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 // ¡Importante! Necesitamos el transportador de SendGrid
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+const { body, validationResult } = require('express-validator');
 
 const app = express();
-app.use(cors());
+// Configuración de CORS seguro
+const allowedOrigin = process.env.WIX_ORIGIN || 'https://tusitio.wixsite.com';
+app.use(cors({ origin: allowedOrigin }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -25,7 +28,19 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 // --- RUTA NUEVA PARA LA CONFIRMACIÓN DE PAYU ---
-app.post('/api/payu-confirmation', (req, res) => {
+app.post('/api/payu-confirmation', [
+  body('merchant_id').isString(),
+  body('reference_sale').isString(),
+  body('value').isNumeric(),
+  body('currency').isString(),
+  body('state_pol').isString(),
+  body('sign').isString(),
+  body('email_buyer').optional().isEmail()
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const {
     merchant_id,
     reference_sale,
@@ -83,8 +98,39 @@ app.post('/api/payu-confirmation', (req, res) => {
   res.status(200).send('Confirmación recibida');
 });
 
+// --- ENDPOINT PARA OBTENER FIRMA DE PAYU ---
+app.post('/api/payu-signature', [
+  body('referenceCode').isString(),
+  body('amount').isNumeric(),
+  body('currency').isString()
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
+  const { referenceCode, amount, currency } = req.body;
+  const apiKey = process.env.PAYU_API_KEY;
+  const merchantId = process.env.PAYU_MERCHANT_ID;
+  
+  // Crear la firma para PayU
+  const signatureString = `${apiKey}~${merchantId}~${referenceCode}~${amount}~${currency}`;
+  const signature = crypto.createHash('md5').update(signatureString).digest('hex');
+  
+  res.json({ signature });
+});
+
 // --- ENDPOINT PARA ENVIAR CORREO CON SENDGRID DESDE EL FRONTEND ---
-app.post('/api/sendgrid-mail', async (req, res) => {
+app.post('/api/sendgrid-mail', [
+  body('colors').isObject(),
+  body('screenshot').isString(),
+  body('buyerEmail').optional().isEmail(),
+  body('paymentMethod').isString()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { colors, screenshot, buyerEmail, paymentMethod } = req.body;
 
   let htmlContent = `<h1>Nuevo pedido recibido</h1>`;
