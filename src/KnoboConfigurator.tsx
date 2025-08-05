@@ -1172,16 +1172,19 @@ const MidiConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
           </div>
 
           {/* Sección de colores */}
-          <div className="mt-6">
-            <p className="font-black text-sm tracking-wide uppercase m-0 mb-3 text-gray-200 text-left">
+          <div className="mt-6 animate-fadeIn">
+            <p className="font-black text-sm tracking-wide uppercase m-0 mb-3 text-gray-200 text-left animate-fadeIn">
               {getTitle()}
             </p>
-            <div className="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 p-1 md:p-2 rounded overflow-x-auto" style={{ backgroundColor: '#232846' }}>
-              {Object.entries(getCurrentColors()).map(([name, colorData]) => (
+            <div className="grid grid-cols-4 gap-2 p-2 rounded overflow-x-auto animate-scaleIn" style={{ backgroundColor: '#232846' }}>
+              {Object.entries(getCurrentColors()).map(([name, colorData], index) => (
                 <div
                   key={name}
-                  className="w-12 h-12 rounded-full cursor-pointer border-2 border-[#a259ff] shadow-[0_0_6px_1px_#a259ff55] transition-all duration-200 shadow-inner hover:scale-110"
-                  style={{ backgroundColor: colorData.hex }}
+                  className="w-10 h-10 rounded-full cursor-pointer border-2 border-[#a259ff] shadow-[0_0_6px_1px_#a259ff55] transition-all duration-200 shadow-inner hover:scale-110 animate-fadeInUp"
+                  style={{ 
+                    backgroundColor: colorData.hex,
+                    animationDelay: `${index * 50}ms`
+                  }}
                   title={name}
                   onClick={() => applyColor(name, colorData)}
                 />

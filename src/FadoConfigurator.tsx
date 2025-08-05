@@ -1002,43 +1002,25 @@ const FadoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
             </div>
 
             {/* Sección de colores */}
-            {currentView !== 'normal' && (
-              <div className="mt-6 animate-slideIn">
-                <div className="flex items-center mb-4">
-                                     <p className="font-black text-base tracking-wide uppercase m-0 text-white text-left animate-fadeIn" style={{
-                     textShadow: '0 0 10px rgba(255, 107, 107, 0.6), 0 0 20px rgba(238, 90, 36, 0.4)',
-                     fontFamily: 'Gotham Black, Arial, sans-serif'
-                   }}>
-                    {getTitle()}
-                  </p>
-                  <div className="ml-2 w-2 h-2 bg-gradient-to-r from-red-400 to-orange-400 rounded-full animate-pulse"></div>
-                </div>
-                <div className="grid grid-cols-4 gap-2 p-2 rounded-lg overflow-x-auto animate-scaleIn" style={{ 
-                  backgroundColor: 'rgba(35, 40, 70, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 107, 107, 0.2)',
-                  boxShadow: '0 8px 32px rgba(255, 107, 107, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                }}>
-                  {Object.entries(getCurrentColors()).map(([name, colorData], index) => (
-                    <div
-                      key={name}
-                      className="w-10 h-10 rounded-full cursor-pointer border-2 border-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl animate-fadeInUp group"
-                      style={{ 
-                        backgroundColor: colorData.hex,
-                        animationDelay: `${index * 50}ms`,
-                        boxShadow: `0 4px 12px rgba(0,0,0,0.3), 0 0 0 2px rgba(255, 107, 107, 0.3), inset 0 1px 0 rgba(255,255,255,0.2)`
-                      }}
-                      title={name}
-                      onClick={() => applyColor(name, colorData)}
-                    >
-                      <div className="w-full h-full rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white bg-opacity-20 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <div className="mt-6 animate-fadeIn">
+              <p className="font-black text-sm tracking-wide uppercase m-0 mb-3 text-gray-200 text-left animate-fadeIn">
+                {getTitle()}
+              </p>
+              <div className="grid grid-cols-4 gap-2 p-2 rounded overflow-x-auto animate-scaleIn" style={{ backgroundColor: '#232846' }}>
+                {Object.entries(getCurrentColors()).map(([name, colorData], index) => (
+                  <div
+                    key={name}
+                    className="w-10 h-10 rounded-full cursor-pointer border-2 border-[#a259ff] shadow-[0_0_6px_1px_#a259ff55] transition-all duration-200 shadow-inner hover:scale-110 animate-fadeInUp"
+                    style={{ 
+                      backgroundColor: colorData.hex,
+                      animationDelay: `${index * 50}ms`
+                    }}
+                    title={name}
+                    onClick={() => applyColor(name, colorData)}
+                  />
+                ))}
               </div>
-            )}
+            </div>
 
             {/* Información de selección múltiple */}
             {(currentView === 'faders' && selectedForColoring) || (currentView === 'faders' && selectedFaders.length > 0) && (

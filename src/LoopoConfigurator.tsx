@@ -475,11 +475,11 @@ const LoopoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo
   // Función para obtener título
   const getTitle = () => {
     if (currentView === 'chasis') {
-      return "🎛️ CHASIS";
+      return "CHASIS";
     } else if (currentView === 'knobs') {
-      return "🎚️ KNOBS";
+      return "KNOBS";
     }
-    return "🎵 LOOPO";
+    return "LOOPO";
   };
 
   // Función para obtener colores actuales
@@ -520,9 +520,9 @@ const LoopoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo
   }, []);
 
   const menuIcons = [
-    { id: 'normal', icon: 'M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17M12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z', title: '🎵 Vista General' },
-    { id: 'chasis', icon: `M4 4 Q2 4 2 8 L2 24 Q2 28 4 28 L28 28 Q30 28 30 24 L30 8 Q30 4 28 4 Z`, title: '🎛️ Chasis', viewBox: '0 0 32 32' },
-    { id: 'knobs', icon: 'M9.42 4.074a.56.56 0 0 0-.56.56v.93c0 .308.252.56.56.56s.56-.252.56-.56v-.93a.56.56 0 0 0-.56-.56M11.554 8.8a.5.5 0 0 1 0 .707l-1.78 1.78a.5.5 0 1 1-.708-.707l1.78-1.78a.5.5 0 0 1 .708 0 M9.42 15.444c-1.16 0-2.32-.44-3.2-1.32a4.527 4.527 0 0 1 0-6.39a4.527 4.527 0 0 1 6.39 0a4.527 4.527 0 0 1 0 6.39c-.88.88-2.03 1.32-3.19 1.32m0-1.1a3.41 3.41 0 1 0 0-6.82a3.41 3.41 0 0 0 0 6.82M6.757 5.2a.56.56 0 1 0-.965.567l.465.809l.005.006a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.075a.566.566 0 0 0 .205-.753zm5.315.012a.55.55 0 0 1 .761-.206c.277.152.36.5.203.764l-.458.797a.56.56 0 0 1-.478.277a.564.564 0 0 1-.487-.834zm7.598 5.722a.5.5 0 0 1 .5-.5h2.52a.5.5 0 1 1 0 1h-2.52a.5.5 0 0 1-.5-.5 M22.69 15.454c2.49 0 4.52-2.03 4.52-4.52s-2.03-4.52-4.52-4.52s-4.52 2.03-4.52 4.52s2.03 4.52 4.52 4.52m0-1.11a3.41 3.41 0 1 1 0-6.82a3.41 3.41 0 0 1 0 6.82m-.56-9.7c0-.308.252-.56.56-.56s.56.252.56.56v.945a.566.566 0 0 1-.56.535a.56.56 0 0 1-.56-.56zm-2.103.566a.557.557 0 0 0-.763-.202a.566.566 0 0 0-.204.753l.468.815l.004.006a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.075a.566.566 0 0 0 .205-.753zm6.086-.204a.55.55 0 0 0-.761.206l-.458.795a.55.55 0 0 0 .194.759a.5.5 0 0 0 .282.077a.6.6 0 0 0 .478-.261l.005-.007l.463-.805a.55.55 0 0 0-.203-.764 M11.93 22.636H9.42a.5.5 0 0 0 0 1h2.51a.5.5 0 1 0 0-1 M4.9 23.136c0 2.49 2.03 4.52 4.52 4.52s4.52-2.03 4.52-4.52s-2.03-4.52-4.52-4.52s-4.52 2.03-4.52 4.52m7.93 0a3.41 3.41 0 1 1-6.82 0a3.41 3.41 0 0 1 6.82 0m-3.41-6.86a.56.56 0 0 0-.56.56v.93c0 .308.252.56.56.56s.56-.252.56-.56v-.93a.56.56 0 0 0-.56-.56m-3.418.93a.566.566 0 0 1 .755.206l.464.807c.137.258.06.6-.205.753a.53.53 0 0 1-.276.074a.58.58 0 0 1-.478-.261l-.005-.007l-.468-.814a.566.566 0 0 1 .207-.755zm6.08.209a.55.55 0 0 1 .761-.206c.277.151.36.499.203.764l-.462.802a.567.567 0 0 1-.766.194a.55.55 0 0 1-.194-.76zm8.475 3.588a.5.5 0 0 1 .707 0l1.78 1.78a.5.5 0 0 1-.707.707l-1.78-1.78a.5.5 0 0 1 0-.707 M22.69 27.656c-1.16 0-2.32-.44-3.2-1.32a4.527 4.527 0 0 1 0-6.39a4.527 4.527 0 0 1 6.39 0a4.527 4.527 0 0 1 0 6.39c-.88.88-2.04 1.32-3.19 1.32m0-1.11a3.41 3.41 0 1 0 0-6.82a3.41 3.41 0 0 0 0 6.82 M22.13 16.836c0-.308.252-.56.56-.56s.56.252.56.56v.945a.57.57 0 0 1-.56.545a.56.56 0 0 1-.56-.56zm-2.103.576a.566.566 0 0 0-.755-.206l-.006.003a.565.565 0 0 0-.206.755l.468.814l.004.007a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.074a.566.566 0 0 0 .205-.753zm6.086-.203a.55.55 0 0 0-.761.206l-.458.795a.55.55 0 0 0 .194.759a.5.5 0 0 0 .282.077a.6.6 0 0 0 .478-.261l.005-.007l.463-.805a.55.55 0 0 0-.203-.764 M1 5.75A4.75 4.75 0 0 1 5.75 1h20.52a4.75 4.75 0 0 1 4.75 4.75v20.48a4.75 4.75 0 0 1-4.75 4.75H5.75A4.75 4.75 0 0 1 1 26.23zM5.75 3A2.75 2.75 0 0 0 3 5.75v20.48a2.75 2.75 0 0 0 2.75 2.75h20.52a2.75 2.75 0 0 0 2.75-2.75V5.75A2.75 2.75 0 0 0 26.27 3z', title: '🎚️ Knobs' }
+    { id: 'normal', icon: 'M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5M12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17M12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z', title: 'Vista General' },
+    { id: 'chasis', icon: `M4 4 Q2 4 2 8 L2 24 Q2 28 4 28 L28 28 Q30 28 30 24 L30 8 Q30 4 28 4 Z`, title: 'Chasis', viewBox: '0 0 32 32' },
+    { id: 'knobs', icon: 'M9.42 4.074a.56.56 0 0 0-.56.56v.93c0 .308.252.56.56.56s.56-.252.56-.56v-.93a.56.56 0 0 0-.56-.56M11.554 8.8a.5.5 0 0 1 0 .707l-1.78 1.78a.5.5 0 1 1-.708-.707l1.78-1.78a.5.5 0 0 1 .708 0 M9.42 15.444c-1.16 0-2.32-.44-3.2-1.32a4.527 4.527 0 0 1 0-6.39a4.527 4.527 0 0 1 6.39 0a4.527 4.527 0 0 1 0 6.39c-.88.88-2.03 1.32-3.19 1.32m0-1.1a3.41 3.41 0 1 0 0-6.82a3.41 3.41 0 0 0 0 6.82M6.757 5.2a.56.56 0 1 0-.965.567l.465.809l.005.006a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.075a.566.566 0 0 0 .205-.753zm5.315.012a.55.55 0 0 1 .761-.206c.277.152.36.5.203.764l-.458.797a.56.56 0 0 1-.478.277a.564.564 0 0 1-.487-.834zm7.598 5.722a.5.5 0 0 1 .5-.5h2.52a.5.5 0 1 1 0 1h-2.52a.5.5 0 0 1-.5-.5 M22.69 15.454c2.49 0 4.52-2.03 4.52-4.52s-2.03-4.52-4.52-4.52s-4.52 2.03-4.52 4.52s2.03 4.52 4.52 4.52m0-1.11a3.41 3.41 0 1 1 0-6.82a3.41 3.41 0 0 1 0 6.82m-.56-9.7c0-.308.252-.56.56-.56s.56.252.56.56v.945a.566.566 0 0 1-.56.535a.56.56 0 0 1-.56-.56zm-2.103.566a.557.557 0 0 0-.763-.202a.566.566 0 0 0-.204.753l.468.815l.004.006a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.075a.566.566 0 0 0 .205-.753zm6.086-.204a.55.55 0 0 0-.761.206l-.458.795a.55.55 0 0 0 .194.759a.5.5 0 0 0 .282.077a.6.6 0 0 0 .478-.261l.005-.007l.463-.805a.55.55 0 0 0-.203-.764 M11.93 22.636H9.42a.5.5 0 0 0 0 1h2.51a.5.5 0 1 0 0-1 M4.9 23.136c0 2.49 2.03 4.52 4.52 4.52s4.52-2.03 4.52-4.52s-2.03-4.52-4.52-4.52s-4.52 2.03-4.52 4.52m7.93 0a3.41 3.41 0 1 1-6.82 0a3.41 3.41 0 0 1 6.82 0m-3.41-6.86a.56.56 0 0 0-.56.56v.93c0 .308.252.56.56.56s.56-.252.56-.56v-.93a.56.56 0 0 0-.56-.56m-3.418.93a.566.566 0 0 1 .755.206l.464.807c.137.258.06.6-.205.753a.53.53 0 0 1-.276.074a.58.58 0 0 1-.478-.261l-.005-.007l-.468-.814a.566.566 0 0 1 .207-.755zm6.08.209a.55.55 0 0 1 .761-.206c.277.151.36.499.203.764l-.462.802a.567.567 0 0 1-.766.194a.55.55 0 0 1-.194-.76zm8.475 3.588a.5.5 0 0 1 .707 0l1.78 1.78a.5.5 0 0 1-.707.707l-1.78-1.78a.5.5 0 0 1 0-.707 M22.69 27.656c-1.16 0-2.32-.44-3.2-1.32a4.527 4.527 0 0 1 0-6.39a4.527 4.527 0 0 1 6.39 0a4.527 4.527 0 0 1 0 6.39c-.88.88-2.04 1.32-3.19 1.32m0-1.11a3.41 3.41 0 1 0 0-6.82a3.41 3.41 0 0 0 0 6.82 M22.13 16.836c0-.308.252-.56.56-.56s.56.252.56.56v.945a.57.57 0 0 1-.56.545a.56.56 0 0 1-.56-.56zm-2.103.576a.566.566 0 0 0-.755-.206l-.006.003a.565.565 0 0 0-.206.755l.468.814l.004.007a.58.58 0 0 0 .478.262a.53.53 0 0 0 .276-.074a.566.566 0 0 0 .205-.753zm6.086-.203a.55.55 0 0 0-.761.206l-.458.795a.55.55 0 0 0 .194.759a.5.5 0 0 0 .282.077a.6.6 0 0 0 .478-.261l.005-.007l.463-.805a.55.55 0 0 0-.203-.764 M1 5.75A4.75 4.75 0 0 1 5.75 1h20.52a4.75 4.75 0 0 1 4.75 4.75v20.48a4.75 4.75 0 0 1-4.75 4.75H5.75A4.75 4.75 0 0 1 1 26.23zM5.75 3A2.75 2.75 0 0 0 3 5.75v20.48a2.75 2.75 0 0 0 2.75 2.75h20.52a2.75 2.75 0 0 0 2.75-2.75V5.75A2.75 2.75 0 0 0 26.27 3z', title: 'Knobs' }
   ];
 
   // Configuración de partículas
@@ -582,14 +582,14 @@ const LoopoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo
             pointerEvents: "none"
           }}
         />
-                 {/* Título principal */}
-         <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10" style={{ 
-           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
-           borderRadius: '16px', 
-           padding: '12px 28px',
-           boxShadow: '0 8px 32px rgba(102, 126, 234, 0.4), 0 4px 16px rgba(118, 75, 162, 0.3)',
-           border: '1px solid rgba(255, 255, 255, 0.1)'
-         }}>
+        {/* Título principal */}
+        <div className="absolute top-6 left-32 z-10" style={{ 
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
+          borderRadius: '16px', 
+          padding: '12px 28px',
+          boxShadow: '0 8px 32px rgba(102, 126, 234, 0.4), 0 4px 16px rgba(118, 75, 162, 0.3)',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }}>
           <h1 className="text-3xl text-white font-bold leading-none m-0" style={{ 
             fontFamily: 'Gotham Black, Arial, sans-serif',
             textShadow: '0 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(102, 126, 234, 0.5)'
@@ -628,7 +628,7 @@ const LoopoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo
         {/* Panel de UI */}
         <div
           className={`fixed top-0 right-0 h-screen border-l border-gray-700 shadow-2xl transition-all duration-400 flex overflow-hidden z-10 ${
-            currentView === 'normal' ? 'w-28' : 'w-[320px]'
+            currentView === 'normal' ? 'w-28' : 'w-[480px]'
           }`}
           style={{
             backgroundColor: '#2D3559',
@@ -671,7 +671,7 @@ const LoopoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo
           </div>
 
           {/* Contenido de la UI */}
-          <div className="flex-1 p-2 flex flex-col">
+          <div className="flex-1 p-4 flex flex-col">
             {/* Header */}
             <div
               className={`flex items-center pb-5 border-b border-gray-600 pl-0 ${currentView === 'normal' ? 'justify-center items-center gap-0' : 'justify-center gap-2'}`}
@@ -714,47 +714,29 @@ const LoopoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo
             </div>
 
             {/* Sección de colores */}
-            {currentView !== 'normal' && (
-              <div className="mt-6 animate-slideIn">
-                <div className="flex items-center mb-4">
-                                     <p className="font-black text-base tracking-wide uppercase m-0 text-white text-left animate-fadeIn" style={{
-                     textShadow: '0 0 10px rgba(102, 126, 234, 0.6), 0 0 20px rgba(118, 75, 162, 0.4)',
-                     fontFamily: 'Gotham Black, Arial, sans-serif'
-                   }}>
-                    {getTitle()}
-                  </p>
-                  <div className="ml-2 w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse"></div>
-                </div>
-                <div className="grid grid-cols-4 gap-2 p-2 rounded-lg overflow-x-auto animate-scaleIn" style={{ 
-                  backgroundColor: 'rgba(35, 40, 70, 0.8)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(102, 126, 234, 0.2)',
-                  boxShadow: '0 8px 32px rgba(102, 126, 234, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                }}>
-                  {Object.entries(getCurrentColors()).map(([name, colorData], index) => (
-                    <div
-                      key={name}
-                      className="w-10 h-10 rounded-full cursor-pointer border-2 border-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl animate-fadeInUp group"
-                      style={{ 
-                        backgroundColor: colorData.hex,
-                        animationDelay: `${index * 50}ms`,
-                        boxShadow: `0 4px 12px rgba(0,0,0,0.3), 0 0 0 2px rgba(102, 126, 234, 0.3), inset 0 1px 0 rgba(255,255,255,0.2)`
-                      }}
-                      title={name}
-                      onClick={() => applyColor(name, colorData)}
-                    >
-                      <div className="w-full h-full rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white bg-opacity-20 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <div className="mt-6 animate-fadeIn">
+              <p className="font-black text-sm tracking-wide uppercase m-0 mb-3 text-gray-200 text-left animate-fadeIn">
+                {getTitle()}
+              </p>
+              <div className="grid grid-cols-4 gap-2 p-2 rounded overflow-x-auto animate-scaleIn" style={{ backgroundColor: '#232846' }}>
+                {Object.entries(getCurrentColors()).map(([name, colorData], index) => (
+                  <div
+                    key={name}
+                    className="w-10 h-10 rounded-full cursor-pointer border-2 border-[#a259ff] shadow-[0_0_6px_1px_#a259ff55] transition-all duration-200 shadow-inner hover:scale-110 animate-fadeInUp"
+                    style={{ 
+                      backgroundColor: colorData.hex,
+                      animationDelay: `${index * 50}ms`
+                    }}
+                    title={name}
+                    onClick={() => applyColor(name, colorData)}
+                  />
+                ))}
               </div>
-            )}
+            </div>
 
             {/* Información de selección múltiple */}
             {currentView === 'knobs' && selectedForColoring && (
-              <div className="mb-4 p-3 bg-gray-800 rounded-lg animate-scaleIn">
+              <div className="mb-6 p-4 bg-gray-800 rounded-lg animate-scaleIn">
                 <h4 className="text-lg font-semibold text-white mb-2 animate-fadeIn">
                   Seleccionado: {selectedForColoring.name}
                 </h4>

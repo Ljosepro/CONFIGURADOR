@@ -1410,42 +1410,37 @@ const MixoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
           </div>
 
           {/* Panel de colores */}
-          {currentView !== 'normal' && (
-            <div className="flex-1 p-6 overflow-y-auto animate-slideIn" style={{ paddingTop: '200px' }}>
-              {/* Panel de colores */}
-              <div className="mb-6 animate-fadeIn">
-                <h3 className="text-xl font-bold text-white mb-4 animate-fadeIn">{getTitle()}</h3>
-                <div className="grid grid-cols-5 gap-3 animate-scaleIn">
-                  {Object.entries(getCurrentColors()).map(([name, color], index) => (
-                                    <button
+          <div className="mt-6 animate-fadeIn">
+            <p className="font-black text-sm tracking-wide uppercase m-0 mb-3 text-gray-200 text-left animate-fadeIn">
+              {getTitle()}
+            </p>
+            <div className="grid grid-cols-4 gap-2 p-2 rounded overflow-x-auto animate-scaleIn" style={{ backgroundColor: '#232846' }}>
+              {Object.entries(getCurrentColors()).map(([name, colorData], index) => (
+                <div
                   key={name}
-                  onClick={() => applyColor(name, color)}
-                  className="w-8 h-8 rounded-full cursor-pointer border-2 border-[#a259ff] shadow-[0_0_6px_1px_#a259ff55] transition-all duration-200 shadow-inner hover:scale-110 animate-fadeInUp"
+                  className="w-10 h-10 rounded-full cursor-pointer border-2 border-[#a259ff] shadow-[0_0_6px_1px_#a259ff55] transition-all duration-200 shadow-inner hover:scale-110 animate-fadeInUp"
                   style={{ 
-                    backgroundColor: color.hex,
+                    backgroundColor: colorData.hex,
                     animationDelay: `${index * 50}ms`
                   }}
                   title={name}
+                  onClick={() => applyColor(name, colorData)}
                 />
-                  ))}
-                </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
               {/* Información de selección múltiple */}
               {(selectedButtons.length > 0 || selectedKnobs.length > 0 || selectedFaders.length > 0) && (
-                <div className="mb-6 p-4 bg-gray-800 rounded-lg animate-scaleIn">
-                  <h4 className="text-lg font-semibold text-white mb-2 animate-fadeIn">
+                <div className="mb-6 p-4 bg-gray-800 rounded-lg">
+                  <h4 className="text-lg font-semibold text-white mb-2">
                     Selección múltiple ({selectedButtons.length + selectedKnobs.length + selectedFaders.length} elementos)
                   </h4>
-                  <p className="text-gray-300 text-sm animate-fadeIn">
+                  <p className="text-gray-300 text-sm">
                     Haz clic en un color para aplicarlo a todos los elementos seleccionados
                   </p>
                 </div>
               )}
-
-
-            </div>
-          )}
         </div>
 
         {/* Modal de pago */}
