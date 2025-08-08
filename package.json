@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "init:tailwind": "tailwindcss init -p",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "yarn build && cd dist && git init && git add . && git commit -m 'Deploy' && git push -f https://github.com/ljosepro/CONFIGURATOR.git main:gh-pages"
   },
   "dependencies": {
     "@paypal/react-paypal-js": "^8.8.3",
@@ -43,7 +43,6 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "gh-pages": "^6.3.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2",
