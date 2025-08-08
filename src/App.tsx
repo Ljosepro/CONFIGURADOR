@@ -19,7 +19,7 @@ function App() {
     { id: 'knobo', name: 'KNOBO', icon: '/textures/knobo.png', description: 'Controlador de Knobs', isImage: true },
     { id: 'mixo', name: 'MIXO', icon: '/textures/mixo.png', description: 'Mixer con Faders', isImage: true },
     { id: 'loopo', name: 'LOOPO', icon: '/textures/loopo.png', description: 'Controlador Loop', isImage: true },
-    { id: 'fado', name: 'FADO', icon: '/textures/fado.png', description: '8 Faders', isImage: true }
+    { id: 'fado', name: 'FADO', icon: 'CONFIGURATOR/textures/fado.png', description: '8 Faders', isImage: true }
   ] as const;
 
   return (
