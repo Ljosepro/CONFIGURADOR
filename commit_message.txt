@@ -1,0 +1,1 @@
+fix: Correct configuration and asset paths
