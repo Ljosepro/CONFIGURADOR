@@ -54,10 +54,7 @@ const MidiConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
   const modelOriginalPositionRef = useRef<THREE.Vector3 | null>(null);
 
     // Estados de React
-  const [currentView, setCurrentView] = useState<'normal' | 'chasis' | 'buttons' | 'knobs'>(() => {
-    const saved = localStorage.getItem('knobo_currentView');
-    return saved ? (saved as 'normal' | 'chasis' | 'buttons' | 'knobs') : 'normal';
-  });
+  const [currentView, setCurrentView] = useState<'normal' | 'chasis' | 'buttons' | 'knobs'>('normal');
   const [selectedForColoring, setSelectedForColoring] = useState<THREE.Mesh | null>(null);
   const [chosenColors, setChosenColors] = useState<ChosenColors>(() => {
     const saved = localStorage.getItem('knobo_chosenColors');
@@ -133,7 +130,7 @@ const MidiConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
 
   const CAMERA_VIEWS = {
     normal: { pos: new THREE.Vector3(2, 1, -0.1), target: new THREE.Vector3(0, -0.5, -0.1) },
-    top:    { pos: new THREE.Vector3(1, 1.65, -0.6), target: new THREE.Vector3(-0.35, -0.9, -0.6) },
+    top:    { pos: new THREE.Vector3(1, 1.65, -0.4), target: new THREE.Vector3(-0.35, -0.9, -0.4) },
   };
 
   // Guardar posición y target iniciales de la cámara
@@ -1019,21 +1016,44 @@ const MidiConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
           pointerEvents: "none"
         }}
       />
-      {/* Título principal */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10" style={{ background: 'linear-gradient(180deg, #6C4FCE 0%, #291A57 100%)', borderRadius: '12px', padding: '8px 24px' }}>
-        <h1 className="text-2xl text-white font-bold leading-none m-0 text-shadow" style={{ fontFamily: 'Gotham Black, Arial, sans-serif' }}>
-          KNOBO
-        </h1>
-      </div>
-
-      {/* Botón de inicio (izquierda) */}
-      <div style={{ position: 'fixed', top: 16, left: 6, zIndex: 51 }}>
+      {/* Botón de inicio y KNOBO (izquierda) */}
+      <div style={{ position: 'fixed', top: 16, left: 6, zIndex: 51, display: 'flex', alignItems: 'center', gap: '12px' }}>
         <button 
           className="px-5 py-2 bg-purple-400 text-black border border-purple-400 rounded font-bold text-sm uppercase tracking-wide transition-all duration-200 hover:bg-yellow-200 hover:border-yellow-200 hover:-translate-y-0.5 hover:shadow-lg shadow-[0_0_8px_2px_#a259ff80,0_0_16px_4px_#0ff5]"
           onClick={() => window.location.href = 'https://www.crearttech.com/'}
         >
           Inicio
         </button>
+        
+        {/* Botón KNOBO */}
+        <div style={{ background: 'linear-gradient(180deg, #6C4FCE 0%, #291A57 100%)', borderRadius: '12px', padding: '8px 24px' }}>
+          <h1 className="text-2xl text-white font-bold leading-none m-0 text-shadow" style={{ fontFamily: 'Gotham Black, Arial, sans-serif' }}>
+            KNOBO
+          </h1>
+        </div>
+      </div>
+
+      {/* Título y logo centrados */}
+      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-3">
+        <img
+          src="models/logo.png"
+          alt="Logo"
+          className="h-8 w-auto"
+          style={{
+            filter: 'drop-shadow(0 0 8px #a259ff) drop-shadow(0 0 16px #0ff)',
+          }}
+        />
+        <h1 
+          className="text-2xl font-bold leading-none m-0" 
+          style={{ 
+            fontFamily: 'Gotham Black, Arial, sans-serif',
+            color: '#fff',
+            textShadow: '0 0 12px #a259ff, 0 0 24px #0ff, 0 0 2px #fff',
+            letterSpacing: '0.04em'
+          }}
+        >
+          CONFIGURADOR
+        </h1>
       </div>
 
               {/* Botón de cambio de configurador (derecha) */}
@@ -1064,7 +1084,7 @@ const MidiConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
       {/* Panel de UI */}
       <div
   className={`fixed top-0 right-0 h-screen border-l border-gray-700 shadow-2xl transition-all duration-400 flex overflow-hidden z-10 ${
-    currentView === 'normal' ? 'w-28' : 'w-[480px]'
+    currentView === 'normal' ? 'w-28' : 'w-[320px]'
   }`}
   style={{
     backgroundColor: '#2D3559',
@@ -1165,7 +1185,7 @@ const MidiConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
                     overflowWrap: 'anywhere',
                   }}
                 >
-                  ONFIGURADOR
+                  KNOBO
                 </h2>
               </>
             )}

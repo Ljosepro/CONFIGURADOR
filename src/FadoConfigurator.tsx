@@ -40,10 +40,7 @@ const FadoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
   const modelRef = useRef<THREE.Group | null>(null);
 
   // Estados de React
-  const [currentView, setCurrentView] = useState<'normal' | 'chasis' | 'faders'>(() => {
-    const saved = localStorage.getItem('fado_currentView');
-    return saved ? (saved as 'normal' | 'chasis' | 'faders') : 'normal';
-  });
+  const [currentView, setCurrentView] = useState<'normal' | 'chasis' | 'faders'>('normal');
   const [selectedForColoring, setSelectedForColoring] = useState<THREE.Mesh | null>(null);
   const [chosenColors, setChosenColors] = useState<ChosenColors>(() => {
     const saved = localStorage.getItem('fado_chosenColors');
@@ -872,34 +869,44 @@ const FadoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
             pointerEvents: "none"
           }}
         />
-                 {/* Título principal */}
-         <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10" style={{ 
-           background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)', 
-           borderRadius: '16px', 
-           padding: '12px 28px',
-           boxShadow: '0 8px 32px rgba(255, 107, 107, 0.4), 0 4px 16px rgba(238, 90, 36, 0.3)',
-           border: '1px solid rgba(255, 255, 255, 0.1)'
-         }}>
-          <h1 className="text-3xl text-white font-bold leading-none m-0" style={{ 
-            fontFamily: 'Gotham Black, Arial, sans-serif',
-            textShadow: '0 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255, 107, 107, 0.5)'
-          }}>
-            PERSONALIZA TU
-            <span className="block relative mt-1" style={{ fontFamily: 'Gotham Black, Arial, sans-serif' }}>
-              FADO
-              <div className="absolute left-0 bottom-0 h-1.5 w-4/5 bg-gradient-to-r from-red-400 to-orange-400 rounded-full shadow-lg"></div>
-            </span>
-          </h1>
-        </div>
-
-        {/* Botón de inicio (izquierda) */}
-        <div style={{ position: 'fixed', top: 16, left: 6, zIndex: 51 }}>
+        {/* Botón de inicio y FADO (izquierda) */}
+        <div style={{ position: 'fixed', top: 16, left: 6, zIndex: 51, display: 'flex', alignItems: 'center', gap: '12px' }}>
           <button 
             className="px-5 py-2 bg-purple-400 text-black border border-purple-400 rounded font-bold text-sm uppercase tracking-wide transition-all duration-200 hover:bg-yellow-200 hover:border-yellow-200 hover:-translate-y-0.5 hover:shadow-lg shadow-[0_0_8px_2px_#a259ff80,0_0_16px_4px_#0ff5]"
             onClick={() => window.location.href = 'https://www.crearttech.com/'}
           >
             Inicio
           </button>
+          
+          {/* Botón FADO */}
+          <div style={{ background: 'linear-gradient(180deg, #6C4FCE 0%, #291A57 100%)', borderRadius: '12px', padding: '8px 24px' }}>
+            <h1 className="text-2xl text-white font-bold leading-none m-0 text-shadow" style={{ fontFamily: 'Gotham Black, Arial, sans-serif' }}>
+              FADO
+            </h1>
+          </div>
+        </div>
+
+        {/* Título y logo centrados */}
+        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10 flex items-center gap-3">
+          <img
+            src="models/logo.png"
+            alt="Logo"
+            className="h-8 w-auto"
+            style={{
+              filter: 'drop-shadow(0 0 8px #a259ff) drop-shadow(0 0 16px #0ff)',
+            }}
+          />
+          <h1 
+            className="text-2xl font-bold leading-none m-0" 
+            style={{ 
+              fontFamily: 'Gotham Black, Arial, sans-serif',
+              color: '#fff',
+              textShadow: '0 0 12px #a259ff, 0 0 24px #0ff, 0 0 2px #fff',
+              letterSpacing: '0.04em'
+            }}
+          >
+            CONFIGURADOR
+          </h1>
         </div>
 
         {/* Container principal */}
@@ -995,7 +1002,7 @@ const FadoConfigurator: React.FC<{ onProductChange?: (product: 'beato' | 'knobo'
                       overflowWrap: 'anywhere',
                     }}
                   >
-                    CONFIGURADOR
+                    FADO
                   </h2>
                 </>
               )}
